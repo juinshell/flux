@@ -1,0 +1,1 @@
+docker run --name flux -d -it -v ~/workspace/flux:/workspace/ --gpus all --privileged=true flux:latest

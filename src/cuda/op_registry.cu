@@ -33,7 +33,7 @@ init_arch_tag() {
   cudaDeviceGetAttribute(&major, cudaDevAttrComputeCapabilityMajor, 0);
   cudaDeviceGetAttribute(&minor, cudaDevAttrComputeCapabilityMinor, 0);
   int arch_num = major * 10 + minor;
-  FLUX_CHECK(arch_num == 80 || arch_num == 89 || arch_num == 90)
+  FLUX_CHECK(arch_num == 80 || arch_num == 89 || arch_num == 90 || arch_num == 86)
       << "unsupported arch: " << arch_num;
   arch = ArchEnum{arch_num};
 }
