@@ -4,8 +4,7 @@ namespace bytedance::flux {
 
 static int _@IMPL_NAME@_@SPLIT_IDX@_@NSPLITS@_@ARCH@_ops [[maybe_unused]] = []() {
   static_assert(is_flux_op_space_v<@IMPL_NAME@_Space>);
-  
-  tuple_for_each(
+  tuple_for_each( // Call function F(e) for each element e in tuple
     @IMPL_NAME@_Space::enumerate_split_meta_hparams_pairs<@SPLIT_IDX@, @NSPLITS@, @ARCH@>(),
     [](auto item) {
       auto [idx, meta_hparams_pair] = item;

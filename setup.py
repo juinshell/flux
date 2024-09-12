@@ -251,7 +251,7 @@ def main():
     setuptools.setup(
         name=PACKAGE_NAME,
         version=flux_version,
-        package_dir={"": "python"},
+        package_dir={"": "python"}, # 包的目录映射，含义是将./python目录映射到包的根目录
         packages=packages,
         description="Flux library",
         ext_modules=[setup_pytorch_extension()],
@@ -260,7 +260,7 @@ def main():
         install_requires=["torch"],
         extras_require={"test": ["torch", "numpy"]},
         license_files=("LICENSE",),
-        package_data={"python/lib": ["*.so"]},  # only works for sdist
+        package_data={"python/lib": ["*.so"]},  # only works for sdist # flux_ths_pybind.xxx.so, setup编译出来的
         python_requires=">=3.8",
         # include_package_data=True,
         data_files=[

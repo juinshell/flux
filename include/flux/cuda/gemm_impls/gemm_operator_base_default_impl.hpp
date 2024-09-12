@@ -56,9 +56,9 @@ struct GemmOperatorBaseDefaultImplMixin : public GemmOperatorBase {
   run(std::any const &args, void *workspace = nullptr, void *stream = nullptr) override {
     uint8_t *workspace_ptr = reinterpret_cast<uint8_t *>(workspace);
     std::size_t workspace_offset = 0;
-
+    // 
     void *args_workspace = workspace_ptr + workspace_offset;
-    workspace_offset += this->get_args_workspace_size(args);
+    workspace_offset += this->get_args_workspace_size(args); // 0
     workspace_offset = cutlass::round_nearest(workspace_offset, cutlass::MinWorkspaceAlignment);
     this->initialize_args_workspace(args, args_workspace, stream);
 

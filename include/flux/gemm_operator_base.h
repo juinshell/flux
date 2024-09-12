@@ -71,6 +71,10 @@ struct OpSpaceBase {
   static constexpr auto
   enumerate_split_meta_hparams_pairs() {
     auto meta_split = split_slice_meta<SplitIdx, NSplits, ArchFilter>();
+    std::cout << "all_gemm_metas().size: " << std::tuple_size_v<decltype(all_gemm_metas())> << std::endl;
+    std::cout << "SplitIdx: " << SplitIdx << ", NSplits: " << NSplits << ", ArchFilter: " << ArchFilter << std::endl;
+    std::cout << "meta_split.size: " << std::tuple_size_v<decltype(meta_split)> << std::endl;
+    // FLUX_SHOW_OBJECT(meta_split);
     return tuple_unpack_cat(tuple_transform(meta_split, [](auto meta) {
       return tuple_enumerate(
           make_space_meta_hparams_pair(cute::make_tuple(meta), all_gemm_hparams()));

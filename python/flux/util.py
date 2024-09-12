@@ -77,6 +77,9 @@ def estimate_gemm_sol_time_ms(M: int, N: int, K: int, dtype=torch.bfloat16):
             return 989 if is_fp16 else 1979
         if device_name.find("H200") >= 0:
             return 1979 if is_fp16 else 3958
+        # https://images.nvidia.com/content/Solutions/data-center/a40/nvidia-a40-datasheet.pdf
+        if device_name.find("A40") >= 0:
+            return 149.6 if is_fp16 else 299.4
         raise Exception(f"not supported device {device_name}")
 
     flops = M * N * K * 2

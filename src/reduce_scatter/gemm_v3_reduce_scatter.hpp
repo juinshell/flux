@@ -395,21 +395,21 @@ using namespace cute;
 struct GemmV3ReduceScatter_Space : OpSpaceBase<GemmV3ReduceScatter_Space> {
   static constexpr auto AllGemmMeta = tuple_filter(
       make_space_gemm_meta(
-          cute::make_tuple(
+          cute::make_tuple( // 4
               _FP16{},
               _BF16{},
               make_gemm_dtype_config(_FP16{}, _FP16{}, _Void{}, _FP16{}),
               make_gemm_dtype_config(_BF16{}, _BF16{}, _Void{}, _BF16{})),
           cute::make_tuple(_Sm90{}),
           cute::make_tuple(_ReduceScatter{}),
-          cute::make_tuple(_RCR{}, _RRR{}),
+          cute::make_tuple(_RCR{}, _RRR{}), // 2 but 1 left
           cute::make_tuple(_GemmV3{}),
-          cute::make_tuple(make_gemm_v3_meta(_True{}), make_gemm_v3_meta(_False{})),
+          cute::make_tuple(make_gemm_v3_meta(_True{}), make_gemm_v3_meta(_False{})), // 2
           tuple_transform(
               tuple_cartesian_product(
                   cute::make_tuple(_True{}, _False{}),
                   cute::make_tuple(_IntraNode{}, _AcrossNode{})),
-              [](auto tup) { return to_reduce_scatter_meta(tup); })),
+              [](auto tup) { return to_reduce_scatter_meta(tup); })),  // 4
       [](auto meta_tuple) {
         constexpr auto meta = to_gemm_meta(decltype(meta_tuple){});
         return not(meta.arch() == _Sm80{} and meta.gemm_layout() == _RRR{});

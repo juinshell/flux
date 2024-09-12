@@ -22,6 +22,7 @@ import datetime
 import torch
 import numpy as np
 import flux
+print("flux path:", flux.__file__)
 from flux.util import is_fp8_dtype
 
 os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":16:8"
@@ -111,13 +112,14 @@ def perf_flux(
     output = torch.empty([m, n], dtype=output_dtype, device=input.device, requires_grad=False)
     ## TODO: remove below once moe fp8 gemm invoke get fixed
     use_fp8_gemm = True if is_fp8 else False
-    op = flux.GemmOnly(
+    print("begin to create flux.GemmOnly")
+    op = flux.GemmOnly( # src/comm_non/ths_op/gemm_only.cpp中使用pybind声明和绑定
         input_dtype=input.dtype,
         output_dtype=output_dtype,
         transpose_weight=transpose_weight,
         use_fp8_gemm=use_fp8_gemm,
     )
-
+    print("end to create flux.GemmOnly")
     def fn():
         return op.forward(
             input,

@@ -153,7 +153,7 @@ class GemmOnly : public torch::CustomClassHolder {
     if (hparams.has_value()) {
       gemm_op = OpRegistry::instance().get_op(meta, hparams.value());
     } else {
-      gemm_op = OpRegistry::instance().get_op(meta, rt_conf);
+      gemm_op = OpRegistry::instance().get_op(meta, rt_conf); // geem_only
     }
 
     cudaStream_t stream = c10::cuda::getCurrentCUDAStream();

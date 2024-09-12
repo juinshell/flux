@@ -71,6 +71,10 @@ while [[ $# -gt 0 ]]; do
         ENABLE_NVSHMEM="ON"
         shift
         ;;
+    --cutlass-trace)
+        CUTLASS_TRACE="ON"
+        shift
+        ;;
     *)
         # Unknown argument
         echo "Unknown argument: $1"
@@ -174,6 +178,11 @@ function build_flux_cuda() {
                 -DFLUX_DEBUG=ON
             )
         fi
+        if [ $CUTLASS_TRACE == "ON" ]; then
+            CMAKE_ARGS+=(
+                -DCUTLASS_TRACE=ON
+            )
+        fi
         ${CMAKE} .. ${CMAKE_ARGS[@]}
     fi
     make -j${JOBS} VERBOSE=1
@@ -211,7 +220,7 @@ function build_flux_py {
     # rm -f ${LIBDIR}/nvshmem_transport_ibrc.so.2
     # rm -f ${LIBDIR}/libnvshmem_host.so.2
     pushd ${LIBDIR}
-    cp -s ../../build/lib/libflux_cuda.so .
+    cp -s ../../build/lib/libflux_cuda.so . # 拷贝上一步编译的动态库到python/lib，方便在setup.py中使用
     if [ $ENABLE_NVSHMEM == "ON" ]; then
         cp -s ../../pynvshmem/build/nvshmem_bootstrap_torch.so .
         cp -s ../../3rdparty/nvshmem/build/src/lib/nvshmem_transport_ibrc.so.2 .

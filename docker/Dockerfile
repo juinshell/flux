@@ -68,4 +68,6 @@ RUN wget https://github.com/Kitware/CMake/releases/download/v3.19.7/cmake-3.19.7
     # verify installation equals to 3.19.7
     cmake --version | grep "3.19.7" || (echo "cmake version is not 3.19.7" && exit 1)
 
+RUN mkdir -p /workspace/flux
+
 

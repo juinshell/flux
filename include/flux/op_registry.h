@@ -144,6 +144,8 @@ class OpRegistry {
     static_assert(cute::is_static_v<GemmHParams<Us...>>, "requires static GemmHParams");
     static_assert(hparams.is_materialized(), "requires hparams be materialized");
     std::unique_lock<std::shared_mutex> lock(register_mutex_);
+
+    // std::cout << "before: meta:[" << meta << "], hparams:[" << hparams << "]" << std::endl;
     auto unified_meta = unify_type(meta);
 
     if (op_registry_.find(unified_meta) == op_registry_.end()) {
@@ -152,6 +154,8 @@ class OpRegistry {
     auto &meta_reg = op_registry_[unified_meta];
 
     auto unified_hparams = unify_type(hparams);
+    // std::cout << "after: unified_meta:[" << unified_meta << "], unified_hparams:[" << unified_hparams
+    //           << "]" << std::endl << std::endl;
     if (meta_reg.find(unified_hparams) != meta_reg.end()) {
       // Allow duplicated hparams
       return;
@@ -216,7 +220,6 @@ class OpRegistry {
 
     // Fallback to the first registered hparams if not dispatcher registered
     auto visit_iter = gemm_hparams_.find(unified_meta);
-
     FLUX_CHECK(visit_iter != gemm_hparams_.end())
         << "No registered hparams found for meta:" << unified_meta;
     const std::set<std::pair<int, UnifiedGemmHParams>> &registered_hparams = visit_iter->second;

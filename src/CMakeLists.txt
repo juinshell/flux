@@ -37,7 +37,7 @@ endif()
 add_subdirectory(comm_none)
 add_subdirectory(all_gather)
 add_subdirectory(reduce_scatter)
-message(STATUS "op_targets: ${FLUX_CUDA_OP_TARGETS}")
+message(STATUS "op_targets: ${FLUX_CUDA_OP_TARGETS}") # op_targets: flux_cuda_comm_none;flux_cuda_all_gather;flux_cuda_reduce_scatter
 
 # this must be after all op subdirectory added
 add_subdirectory(cuda)

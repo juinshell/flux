@@ -46,7 +46,8 @@ def _load_deps():
 
 
 _load_deps()
-flux_mod = importlib.import_module(FLUX_TORCH_EXTENSION_NAME)
+flux_mod = importlib.import_module(FLUX_TORCH_EXTENSION_NAME) # exec static method in module, including register pybind11 module
+print("flux_model_file_path:", flux_mod.__file__) # /workspace/flux/python/flux_ths_pybind.cpython-310-x86_64-linux-gnu.so
 
 
 class NotCompiled:

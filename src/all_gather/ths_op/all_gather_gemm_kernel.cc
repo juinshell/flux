@@ -918,6 +918,7 @@ class AGKernel : public torch::CustomClassHolder {
 
 void
 init_ag_kernel_ops(py::module &m) {}
+
 static int _register_ag_kernel_ops [[maybe_unused]] = []() {
   ThsOpsInitRegistry::instance().register_one("all_gather_gemm_kernel", [](py::module &m) {
     py::enum_<AGRingMode>(m, "AGRingMode", py::arithmetic())

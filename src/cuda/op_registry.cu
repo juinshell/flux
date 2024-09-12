@@ -35,6 +35,9 @@ init_arch_tag() {
   int arch_num = major * 10 + minor;
   FLUX_CHECK(arch_num == 80 || arch_num == 89 || arch_num == 90 || arch_num == 86)
       << "unsupported arch: " << arch_num;
+  if(arch_num == 86) {
+    arch_num = 80;
+  }
   arch = ArchEnum{arch_num};
 }
 }  // namespace

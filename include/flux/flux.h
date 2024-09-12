@@ -452,7 +452,8 @@ tuple_has_elem(cute::tuple<Ts...> const &tup, Elem const &e) {
 // Enum classes
 /////////////////////////////////////////////////////
 enum class DataTypeEnum : int8_t { Void, FP16, BF16, FP32, E4M3, E5M2 };
-enum class ArchEnum : int { Sm80 = 80, Sm89 = 89, Sm90 = 90 };
+enum class ArchEnum : int { Sm80 = 80, Sm89 = 89, Sm90 = 90};
+// enum class ArchEnum : int { Sm89 = 89, Sm90 = 90, Sm80 = 86}; // TODO: changed for debug
 enum class CommOpEnum : int8_t {
   CommNone,       // gemm only, wo/ communication
   AllGather,      // tp allgather + gemm, comm not fused into gemm kernel
@@ -1077,6 +1078,13 @@ using unified_type_t = decltype(unify_type(make_declval<Tpl<>>()));
   CLS(CLS &&) = default;                       \
   CLS &operator=(const CLS &) = default;       \
   CLS &operator=(CLS &&) = default;
+
+#define FLUX_SHOW_OBJECT(OBJ)                      \
+    char foo_##OBJ;                                \
+    std::cout << "[FLUX]@: " << __FILE__ << ":" << __LINE__ << std::endl; \ 
+    std::cout << "\t" << #OBJ << ": " << OBJ << std::endl; 
+    // std::cout << "(continue?)" << std::endl;         \
+    // std::cin >> foo_##OBJ;
 
 }  // namespace flux
 }  // namespace bytedance
