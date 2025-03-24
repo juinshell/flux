@@ -55,8 +55,8 @@ target_link_libraries(test_tuning PUBLIC flux_cuda)
 
 add_executable(copy_d2d_perf copy_d2d_perf.cu)
 
-add_executable(copy_d2d_cute_perf copy_d2d_cute_perf.cu)
-target_link_libraries(copy_d2d_cute_perf PUBLIC NUMA::NUMA flux_cuda)
+# add_executable(copy_d2d_cute_perf copy_d2d_cute_perf.cu)
+# target_link_libraries(copy_d2d_cute_perf PUBLIC NUMA::NUMA flux_cuda)
 
 # using this for reduce_scatter_kernel.hpp to perf ReduceScatterRing[1,2]d[Pull,Push]Gemmk without GEMM
 # ./build/bin/reduce_scatter_kernel_perf \
@@ -69,19 +69,19 @@ target_link_libraries(copy_d2d_cute_perf PUBLIC NUMA::NUMA flux_cuda)
 #   -1d_ring=true \     # the algorithm. use 1d ring or 2d ring.
 #   -sleep_ns=0 \       # this is for E2E gemm+reduce_scatter. to avoid reduce_scatter makes GEMM slow, force reduce_scatter to sleep
 #   -push               # push means using push mode, that's P2P write mode. default is false.
-add_executable(reduce_scatter_kernel_perf reduce_scatter_kernel_perf.cu)
-target_link_libraries(reduce_scatter_kernel_perf PUBLIC NUMA::NUMA flux_cuda)
-target_include_directories(reduce_scatter_kernel_perf
-                           PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../../src)
-target_compile_options(reduce_scatter_kernel_perf PUBLIC -g) # -DFLUX_DEBUG=1)
+# add_executable(reduce_scatter_kernel_perf reduce_scatter_kernel_perf.cu)
+# target_link_libraries(reduce_scatter_kernel_perf PUBLIC NUMA::NUMA flux_cuda)
+# target_include_directories(reduce_scatter_kernel_perf
+#                            PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/../../src)
+# target_compile_options(reduce_scatter_kernel_perf PUBLIC -g) # -DFLUX_DEBUG=1)
 
 add_executable(test_pingpong_latency test_pingpong_latency.cu)
 
 add_executable(test_globaltimer test_globaltimer.cu)
 
-add_executable(copy_d2h_perf copy_d2h_perf.cu)
-target_link_libraries(copy_d2h_perf PUBLIC NUMA::NUMA flux_cuda)
-target_compile_options(copy_d2h_perf PUBLIC -g) # -DFLUX_DEBUG=1)
+# add_executable(copy_d2h_perf copy_d2h_perf.cu)
+# target_link_libraries(copy_d2h_perf PUBLIC NUMA::NUMA flux_cuda)
+# target_compile_options(copy_d2h_perf PUBLIC -g) # -DFLUX_DEBUG=1)
 
 add_executable(
   test_topo_utils test_topo_utils.cc)
@@ -89,5 +89,6 @@ target_link_libraries(test_topo_utils PUBLIC ${TORCH_LIBRARIES} flux_cuda flux_c
 target_include_directories(test_topo_utils PUBLIC ${TORCH_INCLUDE_DIRS})
 
 set_property(
-  TARGET copy_d2h_perf copy_d2d_perf test_globaltimer test_pingpong_latency
+  # TARGET copy_d2h_perf copy_d2d_perf test_globaltimer test_pingpong_latency
+  copy_d2d_perf test_globaltimer test_pingpong_latency
   PROPERTY CUDA_RESOLVE_DEVICE_SYMBOLS ON)
