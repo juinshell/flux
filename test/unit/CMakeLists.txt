@@ -90,5 +90,5 @@ target_include_directories(test_topo_utils PUBLIC ${TORCH_INCLUDE_DIRS})
 
 set_property(
   # TARGET copy_d2h_perf copy_d2d_perf test_globaltimer test_pingpong_latency
-  copy_d2d_perf test_globaltimer test_pingpong_latency
+  TARGET copy_d2d_perf test_globaltimer test_pingpong_latency
   PROPERTY CUDA_RESOLVE_DEVICE_SYMBOLS ON)
