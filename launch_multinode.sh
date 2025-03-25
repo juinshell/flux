@@ -24,7 +24,7 @@ shift
 master_addr="33.254.161.155"
 master_port="23456"
 additional_args="--rdzv_endpoint=${master_addr}:${master_port}"
-IB_HCA=mlx5
+IB_HCA=mlx5_16
 
 
 export NCCL_IB_GID_INDEX=${NCCL_IB_GID_INDEX:=3}
@@ -43,8 +43,8 @@ ${CMD}
 ret=$?
 exit $ret
 
-# ./launch_multinode.sh 0 test/python/ag_gemm/test_ag_kernel.py 8192 49152 12288 --dtype=float16 --iters=10
-# ./launch_multinode.sh 1 test/python/ag_gemm/test_ag_kernel.py 8192 49152 12288 --dtype=float16 --iters=10
+# ./launch_multinode.sh 4 0 test/python/ag_gemm/test_ag_kernel.py 8192 49152 12288 --dtype=float16 --iters=10
+# ./launch_multinode.sh 4 1 test/python/ag_gemm/test_ag_kernel.py 8192 49152 12288 --dtype=float16 --iters=10
 
 # export CUDA_VISIBLE_DEVICES=4,5,6,7
 # ./launch_multinode.sh 4 0 test/python/gemm_rs/test_gemm_rs.py 8192 49152 12288 --dtype=float16 --iters=10
