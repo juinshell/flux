@@ -23,8 +23,10 @@ node_rank=$1
 shift
 master_addr="33.254.161.155"
 master_port="23456"
-additional_args="--rdzv_endpoint=${master_addr}:${master_port}"
+additional_args="--rdzv-endpoint=${master_addr}:${master_port}"
 IB_HCA=mlx5_bond_0
+export NCCL_DEBUG=INFO
+export NCCL_IB_HCA=mlx5_bond_0
 
 
 export NCCL_IB_GID_INDEX=${NCCL_IB_GID_INDEX:=3}
