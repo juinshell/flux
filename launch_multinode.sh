@@ -21,14 +21,14 @@ shift
 nnodes=2
 node_rank=$1
 shift
-master_addr="33.254.161.155"
-master_port="23456"
+master_addr="a0:88:c2:30:ec:cb"
+master_port="23457"
 additional_args="--rdzv_endpoint=${master_addr}:${master_port}"
 IB_HCA=mlx5
 export NCCL_DEBUG=INFO
 # export NCCL_IB_HCA=mlx5_bond_0
 
-export NCCL_SOCKET_IFNAME=bond0
+export NCCL_SOCKET_IFNAME=eth0
 # export NVSHMEM_BOOTSTRAP_UID_SOCK_IFNAME=bond0
 # export NVSHMEM_IB_ADDR_FAMILY=AF_INET6
 # export NVSHMEM_SYMMETRIC_SIZE=10000000000
@@ -52,6 +52,8 @@ exit $ret
 
 # ./launch_multinode.sh 4 0 test/python/ag_gemm/test_ag_kernel.py 8192 49152 12288 --dtype=float16 --iters=10
 # ./launch_multinode.sh 4 1 test/python/ag_gemm/test_ag_kernel.py 8192 49152 12288 --dtype=float16 --iters=10
+
+# ./launch.sh test/python/gemm_rs/test_gemm_rs.py 8192 49152 12288 --dtype=float16 --iters=10
 
 # export CUDA_VISIBLE_DEVICES=4,5,6,7
 # ./launch_multinode.sh 4 0 test/python/gemm_rs/test_gemm_rs.py 8192 49152 12288 --dtype=float16 --iters=10
